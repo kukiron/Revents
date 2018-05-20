@@ -1,20 +1,28 @@
 import React, { Component } from "react"
 import { Segment, Form, Button } from "semantic-ui-react"
 
+const emptyEvent = {
+  title: "",
+  date: "",
+  city: "",
+  venue: "",
+  hostedBy: ""
+}
 class EventForm extends Component {
-  state = {
-    event: {
-      title: "",
-      date: "",
-      city: "",
-      venue: "",
-      hostedBy: ""
-    }
+  state = { event: emptyEvent }
+
+  componentDidMount() {
+    this.props.selectedEvent &&
+      this.setState({
+        event: this.props.selectedEvent
+      })
   }
 
-  onFormSubmit = e => {
-    e.preventDefault()
-    console.log(this.state.event)
+  componentWillReceiveProps(nextProps) {
+    nextProps.selectedEvent !== this.props.selectedEvent &&
+      this.setState({
+        event: nextProps.selectedEvent || emptyEvent
+      })
   }
 
   handleInputChange = e => {
@@ -24,13 +32,21 @@ class EventForm extends Component {
     this.setState({ event: newEvent })
   }
 
+  handleFormSubmit = e => {
+    e.preventDefault()
+
+    const { event } = this.state
+    const { createEvent, updateEvent } = this.props
+    event.id ? updateEvent(event) : createEvent(event)
+  }
+
   render() {
     const { handleCancel } = this.props
     const { event } = this.state
 
     return (
       <Segment>
-        <Form onSubmit={this.onFormSubmit}>
+        <Form onSubmit={this.handleFormSubmit}>
           <Form.Field>
             <label>Event Title</label>
             <input
@@ -72,7 +88,7 @@ class EventForm extends Component {
             <label>Hosted By</label>
             <input
               name="hostedBy"
-              event={event.hostedBy}
+              value={event.hostedBy}
               placeholder="Enter the name of person hosting"
               onChange={this.handleInputChange}
             />
