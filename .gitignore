@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+#sandbox
+testArea/
+
 # testing
 /coverage
 
