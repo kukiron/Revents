@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom"
 import "semantic-ui-css/semantic.min.css"
 
 import App from "./app/layout/App"
-import ScrollToTop from "./app/common/utils/scrollToTop"
+import ScrollToTop from "./app/common/utils/ScrollToTop"
 import { configureStore } from "./app/store/configureStore"
 import registerServiceWorker from "./registerServiceWorker"
 import "./index.css"
