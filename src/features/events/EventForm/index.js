@@ -1,40 +1,71 @@
+/* global google */
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { Segment, Form, Button } from "semantic-ui-react"
+import { reduxForm, Field } from "redux-form"
+import { Grid, Header, Segment, Form, Button } from "semantic-ui-react"
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete"
+import Script from "react-load-script"
+import moment from "moment"
 import cuid from "cuid"
 
+import { category } from "../eventData"
 import { createEvent, updateEvent } from "../eventActions"
+import { validate } from "../../../app/common/form/formValidate"
+import TextInput from "../../../app/common/form/TextInput"
+import TeaxtArea from "../../../app/common/form/TextArea"
+import SelectInput from "../../../app/common/form/SelectInput"
+import DateInput from "../../../app/common/form/DateInput"
+import PlaceInput from "../../../app/common/form/PlaceInput"
 
-const emptyEvent = {
-  title: "",
-  date: "",
-  city: "",
-  venue: "",
-  hostedBy: ""
-}
 class EventForm extends Component {
-  state = { event: Object.assign({}, this.props.event) }
-
-  handleInputChange = e => {
-    const newEvent = this.state.event
-    newEvent[e.target.name] = e.target.value
-
-    this.setState({ event: newEvent })
+  state = {
+    cityLatLng: {},
+    venueLatLng: {},
+    scriptLoaded: false
   }
 
-  handleFormSubmit = e => {
-    e.preventDefault()
+  handleScriptLoad = () => this.setState({ scriptLoaded: true })
 
-    const { event } = this.state
-    const { createEvent, updateEvent, history } = this.props
-    if (event.id) {
-      updateEvent(event)
+  handleCitySelect = selectedCity => {
+    geocodeByAddress(selectedCity)
+      .then(results => getLatLng(results[0]))
+      .then(latlng => {
+        this.setState({
+          cityLatLng: latlng
+        })
+      })
+      .then(() => {
+        this.props.change("city", selectedCity)
+      })
+  }
+
+  handleVenueSelect = selectedVenue => {
+    geocodeByAddress(selectedVenue)
+      .then(results => getLatLng(results[0]))
+      .then(latlng => {
+        this.setState({
+          venueLatLng: latlng
+        })
+      })
+      .then(() => {
+        this.props.change("venue", selectedVenue)
+      })
+  }
+
+  onFormSubmit = values => {
+    const { initialValues, createEvent, updateEvent, history } = this.props
+    values.date = moment(values.date).format()
+    values.venueLatLng = this.state.venueLatLng
+
+    if (initialValues.id) {
+      updateEvent(values)
       history.goBack()
     } else {
       const newEvent = {
-        ...this.state.event,
+        ...values,
         id: cuid(),
-        hostPhotoURL: "/assets/user.png"
+        hostPhotoURL: "/assets/user.png",
+        hostedBy: "Bob Lee Swagger"
       }
       createEvent(newEvent)
       history.push("/events")
@@ -42,78 +73,100 @@ class EventForm extends Component {
   }
 
   render() {
-    const { event } = this.state
-
+    const { invalid, submitting, pristine } = this.props
     return (
-      <Segment>
-        <Form onSubmit={this.handleFormSubmit}>
-          <Form.Field>
-            <label>Event Title</label>
-            <input
-              name="title"
-              value={event.title}
-              placeholder="Event Title"
-              onChange={this.handleInputChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Event Date</label>
-            <input
-              type="date"
-              name="date"
-              value={event.date}
-              placeholder="Event Date"
-              onChange={this.handleInputChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>City</label>
-            <input
-              name="city"
-              value={event.city}
-              placeholder="City event is taking place"
-              onChange={this.handleInputChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Venue</label>
-            <input
-              name="venue"
-              value={event.venue}
-              placeholder="Enter the Venue of the event"
-              onChange={this.handleInputChange}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Hosted By</label>
-            <input
-              name="hostedBy"
-              value={event.hostedBy}
-              placeholder="Enter the name of person hosting"
-              onChange={this.handleInputChange}
-            />
-          </Form.Field>
-          <Button positive type="submit">
-            Submit
-          </Button>
-          <Button type="button" onClick={this.props.history.goBack}>
-            Cancel
-          </Button>
-        </Form>
-      </Segment>
+      <Grid>
+        <Script
+          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4TnBAZbdZjMo2larFzXKhTksL1fwBdQU&libraries=places"
+          onLoad={this.handleScriptLoad}
+        />
+        <Grid.Column width={10}>
+          <Segment>
+            <Header sub color="teal" content="Event Details" />
+            <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
+              <Field
+                name="title"
+                type="text"
+                component={TextInput}
+                placeholder="Give your event a name"
+              />
+              <Field
+                name="category"
+                type="text"
+                component={SelectInput}
+                options={category}
+                placeholder="What is your event about"
+              />
+              <Field
+                name="description"
+                type="text"
+                rows={3}
+                component={TeaxtArea}
+                placeholder="Tell us about your event"
+              />
+              <Header sub color="teal" content="Event Location Details" />
+              <Field
+                name="city"
+                type="text"
+                component={PlaceInput}
+                options={{ type: ["(cities)"] }}
+                placeholder="Event City"
+                onSelect={this.handleCitySelect}
+              />
+              {this.state.scriptLoaded && (
+                <Field
+                  name="venue"
+                  type="text"
+                  component={PlaceInput}
+                  options={{
+                    location: new google.maps.LatLng(this.state.cityLatLng),
+                    radius: 1000,
+                    type: ["establishments"]
+                  }}
+                  placeholder="Event Venue"
+                  onSelect={this.handleVenueSelect}
+                />
+              )}
+              <Field
+                name="date"
+                type="text"
+                component={DateInput}
+                dateFormat="YYYY-MM-DD HH:mm"
+                timeFormat="HH:mm"
+                showTimeSelect
+                placeholder="Event Date"
+              />
+              <Button
+                positive
+                type="submit"
+                disabled={invalid || submitting || pristine}
+              >
+                Submit
+              </Button>
+              <Button type="button" onClick={this.props.history.goBack}>
+                Cancel
+              </Button>
+            </Form>
+          </Segment>
+        </Grid.Column>
+      </Grid>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = ({ events }, ownProps) => {
   const eventId = ownProps.match.params.id
-  let event = emptyEvent
+  let event = {}
 
-  if (eventId && state.events.length > 0) {
-    event = state.events.filter(event => event.id === eventId)[0]
+  if (eventId && events.length) {
+    event = events.filter(event => event.id === eventId)[0]
   }
-
-  return { event }
+  // "initialValues" provides the redux-form the initial data to populate with
+  return { initialValues: event }
 }
 
-export default connect(mapStateToProps, { createEvent, updateEvent })(EventForm)
+export default connect(mapStateToProps, { createEvent, updateEvent })(
+  reduxForm({ form: "eventForm", enableReinitialize: true, validate })(
+    EventForm
+  )
+)
