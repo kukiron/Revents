@@ -10,12 +10,14 @@ import UserDetail from "../../features/user/UserDetail"
 import Settings from "../../features/user/Settings"
 import NavBar from "../../features/nav/NavBar"
 import EventForm from "../../features/events/EventForm"
+import ModalManager from "../../features/modals/ModalManager"
 import NotFound from "./NotFound"
 
 import TestComponent from "../../features/testArea/TestComponent"
 
 const App = () => (
   <div>
+    <ModalManager />
     <Switch>
       <Route exact path="/" component={Home} />
     </Switch>

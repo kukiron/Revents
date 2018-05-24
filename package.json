@@ -18,7 +18,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
     "revalidate": "^1.2.0",
-    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-css": "^2.2.14",
     "semantic-ui-react": "^0.80.0"
   },
   "scripts": {

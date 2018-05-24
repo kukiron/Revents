@@ -2,10 +2,10 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { Menu, Image, Dropdown } from "semantic-ui-react"
 
-const SignedInMenu = ({ signOutUser }) => (
+const LoggedInMenu = ({ signOut, currentUser }) => (
   <Menu.Item position="right">
     <Image avatar spaced="right" src="/assets/user.png" />
-    <Dropdown pointing="top left" text="Username">
+    <Dropdown pointing="top left" text={currentUser}>
       <Dropdown.Menu>
         <Dropdown.Item text="Create Event" icon="plus" />
         <Dropdown.Item text="My Events" icon="calendar" />
@@ -17,10 +17,10 @@ const SignedInMenu = ({ signOutUser }) => (
           text="Settings"
           icon="settings"
         />
-        <Dropdown.Item text="Sign Out" icon="power" onClick={signOutUser} />
+        <Dropdown.Item text="Sign Out" icon="power" onClick={signOut} />
       </Dropdown.Menu>
     </Dropdown>
   </Menu.Item>
 )
 
-export default SignedInMenu
+export default LoggedInMenu
