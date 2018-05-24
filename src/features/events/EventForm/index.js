@@ -8,7 +8,7 @@ import Script from "react-load-script"
 import moment from "moment"
 import cuid from "cuid"
 
-import { category } from "../eventData"
+import { category } from "../../../app/data/eventData"
 import { createEvent, updateEvent } from "../eventActions"
 import { validate } from "../../../app/common/form/formValidate"
 import TextInput from "../../../app/common/form/TextInput"
