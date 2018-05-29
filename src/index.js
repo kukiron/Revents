@@ -8,14 +8,11 @@ import "semantic-ui-css/semantic.min.css"
 import App from "./app/layout/App"
 import ScrollToTop from "./app/common/utils/ScrollToTop"
 import { configureStore } from "./app/store/configureStore"
-import { loadEvents } from "./features/events/eventActions"
 import registerServiceWorker from "./registerServiceWorker"
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css"
 import "./index.css"
 
 const store = configureStore()
-store.dispatch(loadEvents())
-const rootElem = document.getElementById("root")
 
 const renderApp = () => {
   ReactDOM.render(
@@ -31,7 +28,7 @@ const renderApp = () => {
         </ScrollToTop>
       </BrowserRouter>
     </Provider>,
-    rootElem
+    document.getElementById("root")
   )
 }
 
@@ -42,5 +39,9 @@ if (module.hot) {
   })
 }
 
-renderApp()
+// Render App after authentication is ready & loaded by Firebase
+store.firebaseAuthIsReady.then(() => {
+  renderApp()
+})
+
 registerServiceWorker()
