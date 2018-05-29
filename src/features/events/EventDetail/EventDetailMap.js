@@ -2,6 +2,8 @@ import React from "react"
 import { Segment, Icon } from "semantic-ui-react"
 import GoogleMapReact from "google-map-react"
 
+import { googleApiKey } from "../../../app/config/keys"
+
 const Marker = () => <Icon name="marker" size="big" color="red" />
 
 const EventDetailMap = ({ lat, lng }) => {
@@ -12,9 +14,7 @@ const EventDetailMap = ({ lat, lng }) => {
     <Segment attahced="bottom" style={{ padding: 0 }}>
       <div style={{ height: "400px", width: "100%" }}>
         <GoogleMapReact
-          bootstrapURLKeys={{
-            key: "AIzaSyCqG0J0LVxAN-6qsAJtDVgTWpHt5rZX49Y"
-          }}
+          bootstrapURLKeys={{ key: googleApiKey }}
           defaultCenter={center}
           defaultZoom={zoom}
         >
