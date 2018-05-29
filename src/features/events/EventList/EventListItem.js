@@ -18,8 +18,8 @@ const EventListItem = ({ event, onDeleteEvent }) => {
 
   const renderAttendees = () =>
     attendees &&
-    attendees.map(attendee => (
-      <EventListAttendee key={attendee.id} attendee={attendee} />
+    Object.values(attendees).map((attendee, index) => (
+      <EventListAttendee key={index} attendee={attendee} />
     ))
 
   return (
