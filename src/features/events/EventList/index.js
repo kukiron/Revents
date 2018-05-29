@@ -3,13 +3,14 @@ import EventListItem from "./EventListItem"
 
 const EventList = ({ events, onDeleteEvent }) => (
   <div>
-    {events.map(event => (
-      <EventListItem
-        key={event.id}
-        event={event}
-        onDeleteEvent={onDeleteEvent}
-      />
-    ))}
+    {events &&
+      events.map(event => (
+        <EventListItem
+          key={event.id}
+          event={event}
+          onDeleteEvent={onDeleteEvent}
+        />
+      ))}
   </div>
 )
 
