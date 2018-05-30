@@ -16,7 +16,7 @@ import PlaceInput from "../../../app/common/form/PlaceInput"
 import { category } from "../../../app/data/eventData"
 import { createEvent, updateEvent } from "../eventActions"
 import { validate } from "../../../app/common/form/formValidate"
-// import { googleApiKey } from "../../../app/config/keys"
+import { googleApiKey } from "../../../app/config/keys"
 
 class EventForm extends Component {
   state = {
@@ -78,7 +78,7 @@ class EventForm extends Component {
     return (
       <Grid>
         <Script
-          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqG0J0LVxAN-6qsAJtDVgTWpHt5rZX49Y&libraries=places"
+          url={`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places`}
           onLoad={this.handleScriptLoad}
         />
         <Grid.Column width={10}>
