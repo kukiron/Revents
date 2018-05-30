@@ -8,14 +8,15 @@ import Script from "react-load-script"
 import moment from "moment"
 import cuid from "cuid"
 
-import { category } from "../../../app/data/eventData"
-import { createEvent, updateEvent } from "../eventActions"
-import { validate } from "../../../app/common/form/formValidate"
 import TextInput from "../../../app/common/form/TextInput"
 import TeaxtArea from "../../../app/common/form/TextArea"
 import SelectInput from "../../../app/common/form/SelectInput"
 import DateInput from "../../../app/common/form/DateInput"
 import PlaceInput from "../../../app/common/form/PlaceInput"
+import { category } from "../../../app/data/eventData"
+import { createEvent, updateEvent } from "../eventActions"
+import { validate } from "../../../app/common/form/formValidate"
+// import { googleApiKey } from "../../../app/config/keys"
 
 class EventForm extends Component {
   state = {
@@ -77,7 +78,7 @@ class EventForm extends Component {
     return (
       <Grid>
         <Script
-          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4TnBAZbdZjMo2larFzXKhTksL1fwBdQU&libraries=places"
+          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqG0J0LVxAN-6qsAJtDVgTWpHt5rZX49Y&libraries=places"
           onLoad={this.handleScriptLoad}
         />
         <Grid.Column width={10}>
