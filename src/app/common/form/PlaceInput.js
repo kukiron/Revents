@@ -3,6 +3,8 @@ import { Form, Label } from "semantic-ui-react"
 import Script from "react-load-script"
 import PlacesAutocomplete from "react-places-autocomplete"
 
+import { googleApiKey } from "../../config/keys"
+
 const styles = {
   autocompleteContainer: {
     zIndex: 1000
@@ -27,7 +29,7 @@ class PlaceInput extends Component {
     return (
       <Form.Field error={touched && !!error} width={width}>
         <Script
-          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4TnBAZbdZjMo2larFzXKhTksL1fwBdQU&libraries=places"
+          url={`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places`}
           onLoad={this.handleScriptLoad}
         />
         {this.state.scriptLoaded && (
