@@ -1,9 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import format from "date-fns/format"
-import { Segment, Item, Icon, List, Button } from "semantic-ui-react"
+import { Segment, Item, Icon, List, Button, Label } from "semantic-ui-react"
 
 import EventListAttendee from "./EventListAttendee"
+import { objToArr } from "../../../app/common/utils/helpers"
 
 const EventListItem = ({ event, onDeleteEvent }) => {
   const {
@@ -13,13 +14,14 @@ const EventListItem = ({ event, onDeleteEvent }) => {
     venue,
     hostPhotoURL,
     hostedBy,
-    attendees
+    attendees,
+    cancelled
   } = event
 
   const renderAttendees = () =>
     attendees &&
-    Object.values(attendees).map((attendee, index) => (
-      <EventListAttendee key={index} attendee={attendee} />
+    objToArr(attendees).map(attendee => (
+      <EventListAttendee key={attendee.id} attendee={attendee} />
     ))
 
   return (
@@ -29,10 +31,21 @@ const EventListItem = ({ event, onDeleteEvent }) => {
           <Item>
             <Item.Image size="tiny" circular src={hostPhotoURL} />
             <Item.Content>
-              <Item.Header as="a">{title}</Item.Header>
+              <Item.Header as={Link} to={`/events/${event.id}`}>
+                {title}
+              </Item.Header>
               <Item.Description>
-                Hosted by <a>{hostedBy}</a>
+                Hosted by{" "}
+                <Link to={`/profile/${event.hostUid}`}>{hostedBy}</Link>
               </Item.Description>
+              {cancelled && (
+                <Label
+                  style={{ top: -40 }}
+                  color="red"
+                  ribbon="right"
+                  content="Event has been cancelled"
+                />
+              )}
             </Item.Content>
           </Item>
         </Item.Group>
