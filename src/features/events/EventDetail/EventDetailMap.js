@@ -9,10 +9,11 @@ const Marker = () => <Icon name="marker" size="big" color="red" />
 const EventDetailMap = ({ lat, lng }) => {
   const center = [lat, lng]
   const zoom = 11
+  console.log(googleApiKey)
 
   return (
     <Segment attahced="bottom" style={{ padding: 0 }}>
-      <div style={{ height: "400px", width: "100%" }}>
+      <div style={{ height: 400, width: "100%" }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: googleApiKey }}
           defaultCenter={center}
