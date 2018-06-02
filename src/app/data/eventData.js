@@ -1,3 +1,4 @@
+// Sample event data to start with
 export default {
   events: [
     {
@@ -59,6 +60,7 @@ export default {
   ]
 }
 
+// Event categories
 export const category = [
   { key: "drinks", text: "Drinks", value: "drinks" },
   { key: "culture", text: "Culture", value: "culture" },
@@ -68,6 +70,7 @@ export const category = [
   { key: "travel", text: "Travel", value: "travel" }
 ]
 
+// User interests
 export const interests = [
   { key: "drinks", text: "Drinks", value: "drinks" },
   { key: "culture", text: "Culture", value: "culture" },
