@@ -1,11 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Form, Segment, Button, Label, Divider } from "semantic-ui-react"
+import { Form, Segment, Button, Divider } from "semantic-ui-react"
 import { reduxForm, Field } from "redux-form"
 
-import { loginUser, socialLogin } from "../authActions"
 import TextInput from "../../../app/common/form/TextInput"
 import SocialLogin from "../SocialLogin"
+import { loginUser, socialLogin } from "../authActions"
+import renderError from "../../../app/common/utils/renderError"
 
 const LoginForm = ({ loginUser, socialLogin, handleSubmit, error }) => {
   return (
@@ -23,11 +24,7 @@ const LoginForm = ({ loginUser, socialLogin, handleSubmit, error }) => {
           type="password"
           placeholder="password"
         />
-        {error && (
-          <Label basic color="red">
-            {error}
-          </Label>
-        )}
+        {renderError(error)}
         <Button fluid size="large" color="teal">
           Login
         </Button>

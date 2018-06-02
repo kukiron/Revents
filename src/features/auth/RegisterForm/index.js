@@ -1,12 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
 import { combineValidators, isRequired } from "revalidate"
-import { Form, Segment, Button, Label, Divider } from "semantic-ui-react"
+import { Form, Segment, Button, Divider } from "semantic-ui-react"
 import { reduxForm, Field } from "redux-form"
 
-import { registerUser } from "../authActions"
 import TextInput from "../../../app/common/form/TextInput"
 import SocialLogin from "../SocialLogin"
+import { registerUser } from "../authActions"
+import renderError from "../../../app/common/utils/renderError"
 
 const validate = combineValidators({
   displayName: isRequired("User Display Name"),
@@ -42,11 +43,7 @@ const RegisterForm = ({
           component={TextInput}
           placeholder="Password"
         />
-        {error && (
-          <Label basic color="red">
-            {error}
-          </Label>
-        )}
+        {renderError(error)}
         <Button
           disabled={invalid || submitting}
           fluid
