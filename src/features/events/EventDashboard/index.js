@@ -1,12 +1,11 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { firestoreConnect } from "react-redux-firebase"
+import { firestoreConnect, isLoaded, isEmpty } from "react-redux-firebase"
 import { Grid } from "semantic-ui-react"
 
 import EventList from "../EventList"
 import EventActivity from "../EventActivity"
 import LoadingSpinner from "../../../app/layout/LoadingSpinner"
-import { deleteEvent } from "../eventActions"
 
 class EventDashboard extends Component {
   handleDeleteEvent = eventId => () => {
@@ -14,8 +13,9 @@ class EventDashboard extends Component {
   }
 
   render() {
-    const { events, loading } = this.props
-    if (loading) return <LoadingSpinner inverted={true} />
+    const { events } = this.props
+    if (!isLoaded(events) || isEmpty(events))
+      return <LoadingSpinner inverted={true} />
 
     return (
       <Grid>
@@ -31,10 +31,9 @@ class EventDashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  events: state.firestore.ordered.events,
-  loading: state.async.loading
+  events: state.firestore.ordered.events
 })
 
-export default connect(mapStateToProps, {
-  deleteEvent
-})(firestoreConnect([{ collection: "events" }])(EventDashboard))
+export default connect(mapStateToProps)(
+  firestoreConnect([{ collection: "events" }])(EventDashboard)
+)
