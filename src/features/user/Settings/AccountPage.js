@@ -12,11 +12,11 @@ import {
   Form,
   Divider,
   Label,
-  Button,
-  Icon
+  Button
 } from "semantic-ui-react"
 
 import TextInput from "../../../app/common/form/TextInput"
+import { renderFacebook, renderGoogle } from "./helpers"
 
 const validate = combineValidators({
   newPassword1: isRequired({ message: "Please enter a password" }),
@@ -77,30 +77,8 @@ const AccountPage = ({
           </Form>
         </div>
       )}
-
-    {providerId &&
-      providerId === "facebook.com" && (
-        <div>
-          <Header color="teal" sub content="Facebook Account" />
-          <p>Please visit Facebook to update your account settings</p>
-          <Button type="button" color="facebook">
-            <Icon name="facebook" />
-            Go to Facebook
-          </Button>
-        </div>
-      )}
-
-    {providerId &&
-      providerId === "google.com" && (
-        <div>
-          <Header color="teal" sub content="Google Account" />
-          <p>Please visit Google to update your account settings</p>
-          <Button type="button" color="google plus">
-            <Icon name="google plus" />
-            Go to Google
-          </Button>
-        </div>
-      )}
+    {renderFacebook(providerId)}
+    {renderGoogle(providerId)}
   </Segment>
 )
 
