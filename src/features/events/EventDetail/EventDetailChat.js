@@ -1,91 +1,108 @@
-import React from "react"
-import { Segment, Header, Comment, Form, Button } from "semantic-ui-react"
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import { Segment, Header, Comment } from "semantic-ui-react"
+import distanceInWords from "date-fns/distance_in_words"
 
-const EventDetailChat = () => (
-  <div>
-    <Segment
-      textAlign="center"
-      attached="top"
-      inverted
-      color="teal"
-      style={{ border: "none" }}
-    >
-      <Header>Chat about this event</Header>
-    </Segment>
+import EventDetailChatForm from "./EventDetailChatForm"
 
-    <Segment attached>
-      <Comment.Group>
-        <Comment>
-          <Comment.Avatar src="/assets/user.png" />
-          <Comment.Content>
-            <Comment.Author as="a">Matt</Comment.Author>
-            <Comment.Metadata>
-              <div>Today at 5:42PM</div>
-            </Comment.Metadata>
-            <Comment.Text>How artistic!</Comment.Text>
-            <Comment.Actions>
-              <Comment.Action>Reply</Comment.Action>
-            </Comment.Actions>
-          </Comment.Content>
-        </Comment>
+class EventDetailChat extends Component {
+  state = { showReplyForm: false, selectedCommentId: null }
 
-        <Comment>
-          <Comment.Avatar src="/assets/user.png" />
-          <Comment.Content>
-            <Comment.Author as="a">Elliot Fu</Comment.Author>
-            <Comment.Metadata>
-              <div>Yesterday at 12:30AM</div>
-            </Comment.Metadata>
-            <Comment.Text>
-              <p>This has been very useful for my research. Thanks as well!</p>
-            </Comment.Text>
-            <Comment.Actions>
-              <Comment.Action>Reply</Comment.Action>
-            </Comment.Actions>
-          </Comment.Content>
+  handleOpenReplyForm = id => () => {
+    this.setState({ showReplyForm: true, selectedCommentId: id })
+  }
+
+  handleCloseReplyForm = () => {
+    this.setState({
+      showReplyForm: false,
+      selectedCommentId: null
+    })
+  }
+
+  renderCommentContent = (
+    comment,
+    showReplyForm,
+    selectedCommentId,
+    addEventComment,
+    eventId
+  ) => (
+    <Comment.Content>
+      <Comment.Author as={Link} to={`/profile/${comment.uid}`}>
+        {comment.displayName}
+      </Comment.Author>
+      <Comment.Metadata>
+        <div>{distanceInWords(comment.date, Date.now())}</div>
+      </Comment.Metadata>
+      <Comment.Text>{comment.text}</Comment.Text>
+      <Comment.Actions>
+        <Comment.Action onClick={this.handleOpenReplyForm(comment.id)}>
+          Reply
+        </Comment.Action>
+        {showReplyForm &&
+          selectedCommentId === comment.id && (
+            <EventDetailChatForm
+              parentId={comment.parentId !== 0 ? comment.parentId : comment.id}
+              addEventComment={addEventComment}
+              eventId={eventId}
+              form={`reply_${comment.id}`}
+              closeForm={this.handleCloseReplyForm}
+            />
+          )}
+      </Comment.Actions>
+    </Comment.Content>
+  )
+
+  render() {
+    const { eventChat, addEventComment, eventId } = this.props
+    const state = [this.state.showReplyForm, this.state.selectedCommentId]
+    const props = [addEventComment, eventId]
+
+    return (
+      <div>
+        <Segment
+          textAlign="center"
+          attached="top"
+          inverted
+          color="teal"
+          style={{ border: "none" }}
+        >
+          <Header>Chat about this event</Header>
+        </Segment>
+
+        <Segment attached>
           <Comment.Group>
-            <Comment>
-              <Comment.Avatar src="/assets/user.png" />
-              <Comment.Content>
-                <Comment.Author as="a">Jenny Hess</Comment.Author>
-                <Comment.Metadata>
-                  <div>Just now</div>
-                </Comment.Metadata>
-                <Comment.Text>Elliot you are always so right</Comment.Text>
-                <Comment.Actions>
-                  <Comment.Action>Reply</Comment.Action>
-                </Comment.Actions>
-              </Comment.Content>
-            </Comment>
+            {eventChat &&
+              eventChat.map(comment => (
+                <Comment key={comment.id}>
+                  <Comment.Avatar
+                    src={comment.photoURL || "/assets/user.png"}
+                  />
+                  {this.renderCommentContent(comment, ...state, ...props)}
+
+                  {comment.childNodes &&
+                    comment.childNodes.map(child => (
+                      <Comment.Group key={child.id}>
+                        <Comment>
+                          <Comment.Avatar
+                            src={child.photoURL || "/assets/user.png"}
+                          />
+                          {this.renderCommentContent(child, ...state, ...props)}
+                        </Comment>
+                      </Comment.Group>
+                    ))}
+                </Comment>
+              ))}
           </Comment.Group>
-        </Comment>
-
-        <Comment>
-          <Comment.Avatar src="/assets/user.png" />
-          <Comment.Content>
-            <Comment.Author as="a">Joe Henderson</Comment.Author>
-            <Comment.Metadata>
-              <div>5 days ago</div>
-            </Comment.Metadata>
-            <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-            <Comment.Actions>
-              <Comment.Action>Reply</Comment.Action>
-            </Comment.Actions>
-          </Comment.Content>
-        </Comment>
-
-        <Form reply>
-          <Form.TextArea />
-          <Button
-            content="Add Reply"
-            labelPosition="left"
-            icon="edit"
-            primary
+          <EventDetailChatForm
+            parentId={0}
+            addEventComment={addEventComment}
+            eventId={eventId}
+            form={"newComment"}
           />
-        </Form>
-      </Comment.Group>
-    </Segment>
-  </div>
-)
+        </Segment>
+      </div>
+    )
+  }
+}
 
 export default EventDetailChat
