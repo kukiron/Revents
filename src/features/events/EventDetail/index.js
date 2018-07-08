@@ -8,7 +8,7 @@ import EventDetailInfo from "./EventDetailInfo"
 import EventDetailChat from "./EventDetailChat"
 import EventDetailSidebar from "./EventDetailSidebar"
 import { objToArr } from "../../../app/common/utils/helpers"
-import { goingToEvent, cancellGoingToEvent } from "../../user/userAction"
+import { goingToEvent, cancellGoingToEvent } from "../../user/userActions"
 
 class EventDetail extends Component {
   async componentDidMount() {
