@@ -32,7 +32,3 @@ module.exports = {
   }
 }
 ```
-
-## TODO
-
-The comment section still not fully functional. Also, there're other user areas to improve user experience. But the app should be functional to create, update & cancell events.
