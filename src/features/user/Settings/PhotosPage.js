@@ -17,7 +17,7 @@ import {
 } from "semantic-ui-react"
 import "cropperjs/dist/cropper.css"
 
-import { uploadProfileImage, deletePhoto, setMainPhoto } from "../userAction"
+import { uploadProfileImage, deletePhoto, setMainPhoto } from "../userActions"
 
 const query = ({ auth }) => [
   {

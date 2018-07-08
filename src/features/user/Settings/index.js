@@ -9,7 +9,7 @@ import AccountPage from "./AccountPage"
 import PhotosPage from "./PhotosPage"
 import SettingsNav from "./SettingsNav"
 import { updatePassword } from "../../auth/authActions"
-import { updateProfile } from "../userAction"
+import { updateProfile } from "../userActions"
 
 const Settings = ({ updatePassword, updateProfile, providerId, user }) => (
   <Grid>
