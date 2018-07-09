@@ -15,7 +15,11 @@ testArea/
 # production
 /build
 
+# firebase node_modules
+functions/node_modules/**
+
 # misc
+*.log
 *.ini
 *.txt
 .vscode
