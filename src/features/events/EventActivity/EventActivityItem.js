@@ -4,38 +4,32 @@ import { Link } from "react-router-dom"
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now"
 
 class EventActivityItem extends Component {
+  hostName = eventActivity => (
+    <Feed.User as={Link} to={{ pathname: `/profile/${eventActivity.hostUid}` }}>
+      {eventActivity.hostedBy}
+    </Feed.User>
+  )
+
+  eventTitle = eventActivity => (
+    <Link to={{ pathname: `/event/${eventActivity.eventId}` }}>
+      {eventActivity.title}
+    </Link>
+  )
+
   renderSummary = activity => {
     switch (activity.type) {
       case "newEvent":
         return (
           <div>
-            New Event!{" "}
-            <Feed.User
-              as={Link}
-              to={{ pathname: "/profile/" + activity.hostUid }}
-            >
-              {activity.hostedBy}
-            </Feed.User>{" "}
-            is hosting{" "}
-            <Link to={{ pathname: "/event/" + activity.eventId }}>
-              {activity.title}
-            </Link>
+            New Event! {this.hostName(activity)} is hosting{" "}
+            {this.eventTitle(activity)}
           </div>
         )
       case "cancelledEvent":
         return (
           <div>
-            Event Cancelled!{" "}
-            <Feed.User
-              as={Link}
-              to={{ pathname: "/profile/" + activity.hostUid }}
-            >
-              {activity.hostedBy}
-            </Feed.User>{" "}
-            has cancelled{" "}
-            <Link to={{ pathname: "/event/" + activity.eventId }}>
-              {activity.title}
-            </Link>
+            Event Cencelled! {this.hostName(activity)} has cancelled{" "}
+            {this.eventTitle(activity)}
           </div>
         )
       default:
