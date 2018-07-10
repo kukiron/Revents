@@ -1,7 +1,6 @@
 # Revents
 
 Working prototype for event organizing app built with React, Redux, Semantic-UI & Firestore.
-**Still a work in progress**
 
 ## Getting started
 

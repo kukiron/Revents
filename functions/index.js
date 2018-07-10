@@ -24,6 +24,7 @@ const addActivityToCollection = activity =>
     .then(docRef => console.log("Activity created with ID: ", docRef.id))
     .catch(error => console.log("Error adding activity", error))
 
+// Firebase cloud functions
 exports.createActivity = functions.firestore
   .document("events/{eventId}")
   .onCreate(event => {
