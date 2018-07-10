@@ -41,28 +41,15 @@ class UserDetailedPage extends Component {
 
     return (
       <Grid>
-        <Grid.Column width={16}>
-          <UserDetailHeader profile={profile} />
-        </Grid.Column>
-
-        <Grid.Column width={12}>
-          <UserDetailDescription profile={profile} />
-        </Grid.Column>
-        <Grid.Column width={4}>
-          <UserDetailSidebar isCurrentUser={isCurrentUser} profile={profile} />
-        </Grid.Column>
-
-        <Grid.Column width={12}>
-          {<UserDetailPhotos photos={photos} />}
-        </Grid.Column>
-
-        <Grid.Column width={12}>
-          <UserDetailEvents
-            events={events}
-            eventsLoading={eventsLoading}
-            changeTab={this.changeTab}
-          />
-        </Grid.Column>
+        <UserDetailHeader profile={profile} />
+        <UserDetailDescription profile={profile} />
+        <UserDetailSidebar isCurrentUser={isCurrentUser} profile={profile} />
+        <UserDetailPhotos photos={photos} />
+        <UserDetailEvents
+          events={events}
+          eventsLoading={eventsLoading}
+          changeTab={this.changeTab}
+        />
       </Grid>
     )
   }
