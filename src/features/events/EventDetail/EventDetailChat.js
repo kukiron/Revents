@@ -19,7 +19,7 @@ class EventDetailChat extends Component {
     })
   }
 
-  renderCommentContent = (
+  renderComment = (
     comment,
     showReplyForm,
     selectedCommentId,
@@ -77,7 +77,7 @@ class EventDetailChat extends Component {
                   <Comment.Avatar
                     src={comment.photoURL || "/assets/user.png"}
                   />
-                  {this.renderCommentContent(comment, ...state, ...props)}
+                  {this.renderComment(comment, ...state, ...props)}
 
                   {comment.childNodes &&
                     comment.childNodes.map(child => (
@@ -86,7 +86,7 @@ class EventDetailChat extends Component {
                           <Comment.Avatar
                             src={child.photoURL || "/assets/user.png"}
                           />
-                          {this.renderCommentContent(child, ...state, ...props)}
+                          {this.renderComment(child, ...state, ...props)}
                         </Comment>
                       </Comment.Group>
                     ))}

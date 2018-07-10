@@ -4,27 +4,29 @@ import format from "date-fns/format"
 
 import { getFirstName, renderInterests } from "./helpers"
 
-const UserDetailDescription = ({
-  profile: { displayName, occupation, origin, createdAt, about, interests }
-}) => (
+const UserDetailDescription = ({ profile }) => (
   <Segment>
     <Grid columns={2}>
       <Grid.Column width={10}>
-        <Header icon="smile" content={`About ${getFirstName(displayName)}`} />
+        <Header
+          icon="smile"
+          content={`About ${getFirstName(profile.displayName)}`}
+        />
         <p>
-          I am a: <strong>{occupation || "tbn"}</strong>
+          I am a: <strong>{profile.occupation || "tbn"}</strong>
         </p>
         <p>
-          Originally from <strong>{origin || "tbn"}</strong>
+          Originally from <strong>{profile.origin || "tbn"}</strong>
         </p>
         <p>
-          Member Since: <strong>{format(createdAt, "dddd Do MMMM")}</strong>
+          Member Since:{" "}
+          <strong>{format(profile.createdAt, "dddd Do MMMM")}</strong>
         </p>
-        <p>{about || "No detail about this user"}</p>
+        <p>{profile.about || "No detail about this user"}</p>
       </Grid.Column>
       <Grid.Column width={6}>
         <Header icon="heart outline" content="Interests" />
-        <List>{renderInterests(interests)}</List>
+        <List>{renderInterests(profile.interests)}</List>
       </Grid.Column>
     </Grid>
   </Segment>

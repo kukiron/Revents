@@ -30,13 +30,11 @@ export const registerUser = ({ email, password, displayName }) => async (
   const firestore = getFirestore()
 
   try {
-    // create the user in firebase auth
     let createdUser = await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-    // update the auth profile
     await createdUser.updateProfile({ displayName })
-    // create a new profile in firestore
+
     let newUser = {
       displayName,
       createdAt: firestore.FieldValue.serverTimestamp()

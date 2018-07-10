@@ -84,10 +84,10 @@ class EventDashboard extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  events: state.events,
-  loading: state.async.loading,
-  activities: state.firestore.ordered.activity
+const mapStateToProps = ({ events, async, firestore }) => ({
+  events,
+  loading: async.loading,
+  activities: firestore.ordered.activity
 })
 
 export default connect(mapStateToProps, { getEventsForDashboard })(

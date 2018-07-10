@@ -25,8 +25,8 @@ class EventDetail extends Component {
 
   render() {
     const {
-      event,
       auth,
+      event,
       goingToEvent,
       cancellGoingToEvent,
       addEventComment,
@@ -65,19 +65,12 @@ class EventDetail extends Component {
 const mapStateToProps = (
   { firestore: { ordered }, firebase: { auth, data } },
   { match }
-) => {
-  let event = {}
-  if (ordered.events) {
-    event = ordered.events[0]
-  }
-
-  return {
-    event,
-    auth,
-    eventChat:
-      !isEmpty(data.event_chat) && objToArr(data.event_chat[match.params.id])
-  }
-}
+) => ({
+  auth,
+  event: (ordered.events && ordered.events[0]) || {},
+  eventChat:
+    !isEmpty(data.event_chat) && objToArr(data.event_chat[match.params.id])
+})
 
 export default compose(
   withFirestore,
