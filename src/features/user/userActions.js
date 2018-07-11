@@ -111,7 +111,7 @@ export const setMainPhoto = photo => async (
     })
   } catch (error) {
     console.log(error)
-    throw new Error("Poblem detting main photo")
+    throw new Error("Poblem deleting main photo")
   }
 }
 
@@ -167,7 +167,7 @@ export const cancellGoingToEvent = event => async (
     )
   } catch (error) {
     console.log(error)
-    toastr.error("Oops", "Somethinf went wrong")
+    toastr.error("Oops", "Something went wrong")
   }
 }
 
@@ -175,7 +175,6 @@ export const getUserEvents = (userUid, activeTab) => async (
   dispatch,
   getState
 ) => {
-  dispatch(asyncActionStart())
   const firestore = firebase.firestore()
   const today = new Date(Date.now())
   let eventsRef = firestore.collection("event_attendees")
@@ -207,6 +206,7 @@ export const getUserEvents = (userUid, activeTab) => async (
   }
 
   try {
+    dispatch(asyncActionStart())
     let querySnapshot = await query.get()
     let events = []
 
@@ -224,5 +224,58 @@ export const getUserEvents = (userUid, activeTab) => async (
   } catch (error) {
     console.log(error)
     dispatch(asyncActionError())
+  }
+}
+
+export const followUser = userToFollow => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  const firestore = getFirestore()
+  const user = firestore.auth().currentUser
+
+  // get the detail of the person user wants to follow
+  const { id, displayName, city, photoURL } = userToFollow
+  const following = {
+    displayName,
+    city: city || "Unknown City",
+    photoURL: photoURL || "/assets/user.png"
+  }
+
+  try {
+    // add that person to the user's "following" collection
+    await firestore.set(
+      {
+        collection: "users",
+        doc: user.uid,
+        subcollections: [{ collection: "following", doc: id }]
+      },
+      following
+    )
+  } catch (error) {
+    console.log(error)
+    throw new Error("Problem following this person")
+  }
+}
+
+export const unfollowUser = userToUnfollow => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  const firestore = getFirestore()
+  const user = firestore.auth().currentUser
+
+  try {
+    // remove the person from user's "following" collection
+    await firestore.delete({
+      collection: "users",
+      doc: user.uid,
+      subcollections: [{ collection: "following", doc: userToUnfollow.id }]
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error("Problem unfollowing this person")
   }
 }
