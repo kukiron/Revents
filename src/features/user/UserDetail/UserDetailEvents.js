@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Grid, Segment, Header, Card, Image, Tab } from "semantic-ui-react"
 import format from "date-fns/format"
 
+// Tabs for different events on user profile
 const panes = [
   { menuItem: "All Events", pane: { key: "allEvents" } },
   { menuItem: "Past Events", pane: { key: "pastEvents" } },

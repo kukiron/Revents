@@ -1,8 +1,17 @@
 import React from "react"
-import { Grid, Segment, Header, List } from "semantic-ui-react"
+import { Grid, Segment, Header, List, Item, Icon } from "semantic-ui-react"
 import format from "date-fns/format"
 
-import { getFirstName, renderInterests } from "./helpers"
+const getFirstName = fullName => fullName && fullName.split(" ")[0]
+
+const renderInterests = interests =>
+  interests &&
+  interests.map((interest, index) => (
+    <Item key={index}>
+      <Icon name="heart" />
+      <Item.Content>{interest}</Item.Content>
+    </Item>
+  ))
 
 const UserDetailDescription = ({ profile }) => (
   <Grid.Column width={12}>
