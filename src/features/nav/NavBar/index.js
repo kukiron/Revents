@@ -36,8 +36,8 @@ class NavBar extends Component {
           <Menu.Item as={NavLink} to="/events" name="Events" />
           {authenticated ? (
             [
-              <Menu.Item as={NavLink} to="/people" name="People" />,
-              <Menu.Item>
+              <Menu.Item key={1} as={NavLink} to="/people" name="People" />,
+              <Menu.Item key={2}>
                 <Button
                   as={Link}
                   to="/createEvent"
@@ -48,6 +48,7 @@ class NavBar extends Component {
                 />
               </Menu.Item>,
               <LoggedInMenu
+                key={3}
                 auth={auth}
                 profile={profile}
                 signOut={this.handleSignOut}
