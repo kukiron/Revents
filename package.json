@@ -16,6 +16,7 @@
     "react-infinite-scroller": "^1.2.0",
     "react-lazyload": "^2.3.0",
     "react-load-script": "0.0.6",
+    "react-loadable": "^5.4.0",
     "react-places-autocomplete": "^6.1.3",
     "react-redux": "^5.0.7",
     "react-redux-firebase": "^2.0.6",
@@ -36,12 +37,15 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "analyze": "source-map-explorer build/static/js/main.*",
     "lint": "eslint . --ext .js, .jsx",
-    "lint:fix": "eslint --fix . --ext .js, .jsx"
+    "lint:fix": "eslint --fix . --ext .js, .jsx",
+    "deploy": "npm run build && firebase deploy"
   },
   "devDependencies": {
     "eslint-plugin-prettier": "^2.6.0",
     "prettier": "^1.12.1",
-    "redux-devtools-extension": "^2.13.2"
+    "redux-devtools-extension": "^2.13.2",
+    "source-map-explorer": "^1.5.0"
   }
 }
