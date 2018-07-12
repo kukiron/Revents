@@ -141,7 +141,7 @@ export const setMainPhoto = photo => async (dispatch, getState) => {
   } catch (error) {
     console.log(error)
     dispatch(asyncActionError())
-    throw new Error("Poblem deleting main photo")
+    throw new Error("Poblem setting main photo")
   }
 }
 
