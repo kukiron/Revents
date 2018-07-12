@@ -3,11 +3,13 @@ import { Link } from "react-router-dom"
 
 const NotFound = ({ location }) => (
   <div>
-    <h4>
-      The path <code>{location.pathname}</code> couldn't be found
+    <h1>
+      Error 404. Not Found!
       <br />
+    </h1>
+    <h3>
       Back to <Link to="/">Homepage</Link>
-    </h4>
+    </h3>
   </div>
 )
 
