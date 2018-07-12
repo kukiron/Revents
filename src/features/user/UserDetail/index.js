@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { compose } from "redux"
+import { toastr } from "react-redux-toastr"
 import { firestoreConnect, isEmpty } from "react-redux-firebase"
 import { Grid } from "semantic-ui-react"
 
@@ -15,7 +16,14 @@ import { getUserEvents, followUser, unfollowUser } from "../userActions"
 
 class UserDetailedPage extends Component {
   async componentDidMount() {
-    const { getUserEvents, userUid } = this.props
+    const { firestore, match, getUserEvents, userUid } = this.props
+
+    let user = await firestore.get(`users/${match.params.id}`)
+    if (!user.exists) {
+      toastr.error("Not found", "This is not the user you're looking for")
+      this.props.history.push("/error")
+    }
+
     await getUserEvents(userUid)
   }
 
@@ -38,7 +46,7 @@ class UserDetailedPage extends Component {
       unfollowUser
     } = this.props
     const isCurrentUser = auth.uid === match.params.id
-    const isLoading = Object.values(requesting).some(a => a === true)
+    const isLoading = requesting[`users/${match.params.id}`]
     const isFollowing = !isEmpty(following)
 
     if (isLoading) return <LoadingSpinner inverted={true} />
