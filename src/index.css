@@ -25,7 +25,7 @@ body {
 }
 
 .masthead.segment {
-  min-height: 700px;
+  min-height: 100vh;
   padding: 1em 0 !important;
 }
 
