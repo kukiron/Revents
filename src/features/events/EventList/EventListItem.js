@@ -19,7 +19,7 @@ const EventListItem = ({ event }) => (
         <Item>
           <Item.Image size="tiny" circular src={event.hostPhotoURL} />
           <Item.Content>
-            <Item.Header as={Link} to={`/events/${event.id}`}>
+            <Item.Header as={Link} to={`/event/${event.id}`}>
               {event.title}
             </Item.Header>
             <Item.Description>
