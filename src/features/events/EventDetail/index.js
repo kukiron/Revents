@@ -11,6 +11,14 @@ import EventDetailSidebar from "./EventDetailSidebar"
 import { objToArr, createDataTree } from "../../../app/common/utils/helpers"
 import { goingToEvent, cancellGoingToEvent } from "../../user/userActions"
 import { addEventComment } from "../eventActions"
+import { openModal } from "../../modals/modalActions"
+
+const actions = {
+  goingToEvent,
+  cancellGoingToEvent,
+  addEventComment,
+  openModal
+}
 
 class EventDetail extends Component {
   async componentDidMount() {
@@ -31,12 +39,14 @@ class EventDetail extends Component {
       goingToEvent,
       cancellGoingToEvent,
       addEventComment,
-      eventChat
+      eventChat,
+      openModal
     } = this.props
     const attendees = event && event.attendees && objToArr(event.attendees)
     const isHost = event.hostUid === auth.uid
     const isGoing = attendees && attendees.some(a => a.id === auth.uid)
     const commentTree = !isEmpty(eventChat) && createDataTree(eventChat)
+    const authenticated = auth.isLoaded && !auth.isEmpty
 
     return (
       <Grid>
@@ -48,13 +58,17 @@ class EventDetail extends Component {
             loading={loading}
             goingToEvent={goingToEvent}
             cancellGoingToEvent={cancellGoingToEvent}
+            authenticated={authenticated}
+            openModal={openModal}
           />
           <EventDetailInfo event={event} />
-          <EventDetailChat
-            eventChat={commentTree}
-            addEventComment={addEventComment}
-            eventId={event.id}
-          />
+          {authenticated && (
+            <EventDetailChat
+              eventChat={commentTree}
+              addEventComment={addEventComment}
+              eventId={event.id}
+            />
+          )}
         </Grid.Column>
         <Grid.Column width={6}>
           <EventDetailSidebar attendees={attendees} />
@@ -77,10 +91,6 @@ const mapStateToProps = (
 
 export default compose(
   withFirestore,
-  connect(mapStateToProps, {
-    goingToEvent,
-    cancellGoingToEvent,
-    addEventComment
-  }),
+  connect(mapStateToProps, actions),
   firebaseConnect(({ match }) => [`event_chat/${match.params.id}`])
 )(EventDetail)
