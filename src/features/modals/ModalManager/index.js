@@ -3,12 +3,14 @@ import { connect } from "react-redux"
 
 import LoginModal from "../LoginModal"
 import RegisterModal from "../RegisterModal"
+import UnauthModal from "../UnauthModal"
 import TestModal from "../../testArea/TestModal"
 
 const modalLookup = {
   TestModal,
   LoginModal,
-  RegisterModal
+  RegisterModal,
+  UnauthModal
 }
 
 const ModalManager = ({ currentModals }) => {
