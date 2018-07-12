@@ -14,6 +14,7 @@ import ManageEventForm from "../../features/events/EventForm/ManageEventForm"
 import ModalManager from "../../features/modals/ModalManager"
 import NotFound from "./NotFound"
 // import TestComponent from "../../features/testArea/TestComponent"
+import { AuthenticatedUser } from "../../features/auth/authWrapper"
 
 const App = () => (
   <div>
@@ -31,11 +32,23 @@ const App = () => (
             <Switch>
               <Route path="/events" component={EventDashboard} />
               <Route path="/event/:id" component={EventDetail} />
-              <Route path="/manage/:id" component={ManageEventForm} />
-              <Route path="/people" component={PeopleDashboard} />
-              <Route path="/profile/:id" component={UserDetail} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/createEvent" component={CreateEventForm} />
+              <Route
+                path="/manage/:id"
+                component={AuthenticatedUser(ManageEventForm)}
+              />
+              <Route
+                path="/people"
+                component={AuthenticatedUser(PeopleDashboard)}
+              />
+              <Route
+                path="/profile/:id"
+                component={AuthenticatedUser(UserDetail)}
+              />
+              <Route path="/settings" component={AuthenticatedUser(Settings)} />
+              <Route
+                path="/createEvent"
+                component={AuthenticatedUser(CreateEventForm)}
+              />
               {/* <Route path="/test" component={TestComponent} /> */}
               <Route component={NotFound} />
             </Switch>
