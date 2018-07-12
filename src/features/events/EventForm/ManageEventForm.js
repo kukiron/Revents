@@ -62,7 +62,7 @@ class EventForm extends Component {
       })
   }
 
-  onFormSubmit = values => {
+  onFormSubmit = async values => {
     const {
       initialValues,
       createEvent,
@@ -76,7 +76,7 @@ class EventForm extends Component {
       if (Object.keys(values.venueLatLng).length === 0) {
         values.venueLatLng = event.venueLatLng
       }
-      updateEvent(values)
+      await updateEvent(values)
       history.goBack()
     } else {
       createEvent(values)
@@ -85,7 +85,14 @@ class EventForm extends Component {
   }
 
   render() {
-    const { invalid, submitting, pristine, event, cancelToggle } = this.props
+    const {
+      invalid,
+      submitting,
+      pristine,
+      event,
+      cancelToggle,
+      loading
+    } = this.props
     return (
       <Grid>
         <Script
@@ -151,11 +158,16 @@ class EventForm extends Component {
               <Button
                 positive
                 type="submit"
+                loading={loading}
                 disabled={invalid || submitting || pristine}
               >
                 Submit
               </Button>
-              <Button type="button" onClick={this.props.history.goBack}>
+              <Button
+                disabled={loading}
+                type="button"
+                onClick={this.props.history.goBack}
+              >
                 Cancel
               </Button>
               {event && (
@@ -177,7 +189,7 @@ class EventForm extends Component {
   }
 }
 
-const mapStateToProps = ({ firestore: { ordered } }) => {
+const mapStateToProps = ({ firestore: { ordered }, async: { loading } }) => {
   let event = {}
   if (ordered.events) {
     event = ordered.events[0]
@@ -186,6 +198,7 @@ const mapStateToProps = ({ firestore: { ordered } }) => {
   return {
     // "initialValues" provides the redux-form the initial data to populate with
     initialValues: event,
+    loading,
     event
   }
 }
