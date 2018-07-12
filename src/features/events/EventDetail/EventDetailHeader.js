@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import format from "date-fns/format"
-import { Segment, Image, Item, Header, Button } from "semantic-ui-react"
+import { Segment, Image, Item, Header, Button, Label } from "semantic-ui-react"
 
 const eventImageTextStyle = {
   position: "absolute",
@@ -49,37 +49,47 @@ const EventDetailHeader = ({
     </Segment>
 
     <Segment attached="bottom">
-      {!isHost && (
-        <div>
-          {isGoing ? (
-            <Button onClick={() => cancellGoingToEvent(event)}>
-              Cancel My Place
-            </Button>
-          ) : authenticated ? (
-            <Button
-              loading={loading}
-              onClick={() => goingToEvent(event)}
-              color="teal"
-            >
-              JOIN THIS EVENT
-            </Button>
-          ) : (
-            <Button
-              loading={loading}
-              onClick={() => openModal("UnauthModal")}
-              color="teal"
-            >
-              JOIN THIS EVENT
-            </Button>
-          )}
-        </div>
-      )}
+      {!isHost &&
+        !event.cancelled && (
+          <div>
+            {isGoing ? (
+              <Button onClick={() => cancellGoingToEvent(event)}>
+                Cancel My Place
+              </Button>
+            ) : authenticated ? (
+              <Button
+                loading={loading}
+                onClick={() => goingToEvent(event)}
+                color="teal"
+              >
+                JOIN THIS EVENT
+              </Button>
+            ) : (
+              <Button
+                loading={loading}
+                onClick={() => openModal("UnauthModal")}
+                color="teal"
+              >
+                JOIN THIS EVENT
+              </Button>
+            )}
+          </div>
+        )}
 
       {isHost && (
         <Button as={Link} to={`/manage/${event.id}`} color="orange">
           Manage Event
         </Button>
       )}
+
+      {event.cancelled &&
+        !isHost && (
+          <Label
+            size="large"
+            color="red"
+            content="This event has been cancelled"
+          />
+        )}
     </Segment>
   </Segment.Group>
 )
