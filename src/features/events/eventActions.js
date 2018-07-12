@@ -1,5 +1,6 @@
 import moment from "moment"
 import { toastr } from "react-redux-toastr"
+import compareAsc from "date-fns/compare_asc"
 
 import { FETCH_EVENTS } from "./eventConstants"
 import {
@@ -35,21 +36,51 @@ export const createEvent = event => async (
   }
 }
 
-export const updateEvent = event => async (
-  dispatch,
-  getState,
-  { getFirestore }
-) => {
-  const firestore = getFirestore()
+export const updateEvent = event => async (dispatch, getState) => {
+  const firestore = firebase.firestore()
   if (event.date !== getState().firestore.ordered.events[0].date) {
     event.date = moment(event.date).toDate()
   }
 
   try {
-    await firestore.update(`events/${event.id}`, event)
+    dispatch(asyncActionStart())
+    let eventDocRef = firestore.collection("events").doc(event.id)
+    let dateEqual = compareAsc(
+      getState().firestore.ordered.events[0].date,
+      event.date
+    )
+    if (dateEqual !== 0) {
+      let batch = firestore.batch()
+      await batch.update(eventDocRef, event)
+
+      let eventAttendeeRef = firestore.collection("event_attendees")
+      let eventAttendeeQuery = await eventAttendeeRef.where(
+        "eventId",
+        "==",
+        event.id
+      )
+      let eventAttendeeQuerySnap = await eventAttendeeQuery.get()
+
+      for (let doc in eventAttendeeQuerySnap.docs) {
+        let eventAttendeeDocRef = await firestore
+          .collection("event_attendees")
+          .doc(eventAttendeeQuerySnap.docs[doc].id)
+
+        await batch.update(eventAttendeeDocRef, {
+          eventDate: event.date
+        })
+      }
+
+      await batch.commit()
+    } else {
+      await eventDocRef.update(event)
+    }
+
+    dispatch(asyncActionFinish())
     toastr.success("Success!", "Event has been updated")
   } catch (err) {
     console.log(err)
+    dispatch(asyncActionError())
     toastr.error("Oops!", "Something went wrong")
   }
 }
