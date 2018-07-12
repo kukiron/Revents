@@ -27,6 +27,7 @@ class EventDetail extends Component {
     const {
       auth,
       event,
+      loading,
       goingToEvent,
       cancellGoingToEvent,
       addEventComment,
@@ -44,6 +45,7 @@ class EventDetail extends Component {
             event={event}
             isHost={isHost}
             isGoing={isGoing}
+            loading={loading}
             goingToEvent={goingToEvent}
             cancellGoingToEvent={cancellGoingToEvent}
           />
@@ -63,10 +65,11 @@ class EventDetail extends Component {
 }
 
 const mapStateToProps = (
-  { firestore: { ordered }, firebase: { auth, data } },
+  { firestore: { ordered }, firebase: { auth, data }, async },
   { match }
 ) => ({
   auth,
+  loading: async.loading,
   event: (ordered.events && ordered.events[0]) || {},
   eventChat:
     !isEmpty(data.event_chat) && objToArr(data.event_chat[match.params.id])
