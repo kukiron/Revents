@@ -148,12 +148,12 @@ export const setMainPhoto = photo => async (dispatch, getState) => {
 export const goingToEvent = event => async (dispatch, getState) => {
   const firestore = firebase.firestore()
   const user = firebase.auth().currentUser
-  const photoURL = getState().firebase.profile.photoURL
+  const { photoURL, displayName } = getState().firebase.profile
   const attnedee = {
     going: true,
     joinDate: Date.now(),
     photoURL: photoURL || "/assets/user.png",
-    displayName: user.displayName,
+    displayName: displayName,
     host: false
   }
 
