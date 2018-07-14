@@ -104,10 +104,7 @@ export const cancelToggle = (cancelled, eventId) => async (
   }
 }
 
-export const getEventsForDashboard = lastEvent => async (
-  dispatch,
-  getState
-) => {
+export const getEventsForDashboard = lastEvent => async dispatch => {
   let today = new Date(Date.now())
   const firestore = firebase.firestore()
   const eventsRef = firestore.collection("events")

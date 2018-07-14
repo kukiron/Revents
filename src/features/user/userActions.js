@@ -98,7 +98,7 @@ export const deletePhoto = photo => async (
   }
 }
 
-export const setMainPhoto = photo => async (dispatch, getState) => {
+export const setMainPhoto = photo => async dispatch => {
   const firestore = firebase.firestore()
   const user = firebase.auth().currentUser
   const today = new Date(Date.now())
