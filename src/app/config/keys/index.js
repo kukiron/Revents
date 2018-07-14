@@ -1,7 +1,7 @@
-if (process.env.NODE_ENV === "production") {
-  module.exports = require("./prod")
-} else if (process.env.NODE_ENV === "ci") {
-  module.exports = require("./ci")
-} else {
-  module.exports = require("./dev")
-}
+const googleApiKey = `${process.env.REACT_APP_GOOGLE_API_KEY}`
+const firebaseApiKey = `${process.env.REACT_APP_FIREBASE_CONFIG_apiKey}`
+const messagingSenderId = `${
+  process.env.REACT_APP_FIREBASE_CONFIG_messagingSenderId
+  }`
+
+module.exports = { googleApiKey, firebaseApiKey, messagingSenderId }
