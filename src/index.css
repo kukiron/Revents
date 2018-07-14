@@ -22,10 +22,10 @@ body {
 
 .masthead {
   background-image: linear-gradient( 135deg, rgb(24, 42, 115) 0%, rgb(33, 138, 174) 69%, rgb(32, 167, 172) 89%) !important;
+  min-height: 100vh;
 }
 
 .masthead.segment {
-  min-height: 100vh;
   padding: 1em 0 !important;
 }
 
@@ -93,4 +93,10 @@ body {
 .ui.comments .comment .comments {
   padding-bottom: 0 !important;
   padding-left: 2em !important;
+}
+
+/* Centering the modals */
+
+.ui.page.modals.transition.visible {
+  display: flex !important;
 }
