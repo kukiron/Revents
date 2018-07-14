@@ -4,6 +4,7 @@
   "description": "Event organizing app Revents, built with React, Redux, Semantic-UI & Firestore",
   "main": "index.js",
   "scripts": {
+    "clear": "rm -rf ./build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -11,7 +12,6 @@
     "lint": "eslint . --ext .js, .jsx",
     "lint:fix": "eslint --fix . --ext .js, .jsx",
     "heroku-prebuild": "npm install --only=dev",
-    "heroku-postbuild": "npm run build",
     "deploy": "npm run build && firebase deploy",
     "analyze": "source-map-explorer build/static/js/main.*"
   },
@@ -31,7 +31,7 @@
   "dependencies": {
     "cuid": "^2.1.1",
     "date-fns": "^1.29.0",
-    "firebase": "^4.12.1",
+    "firebase": "4.12.1",
     "google-map-react": "^1.0.3",
     "moment": "^2.22.1",
     "react": "^16.3.2",
