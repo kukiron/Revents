@@ -15,19 +15,16 @@ The app is built with create-react-app. So, to get start with:
 
 ## Firebase setup
 
-You need to set up a project in firebase & in Google for this repo to function properly. Use the Google API key & Firebase config object from respective developer consoles & create file `./src/app/config/keys/dev.js`.
+You need to set up a project in firebase & in Google for this repo to function properly. Use the Google API key & Firebase config object from respective developer consoles & create file `./src/app/config/firebase.js`.
 
 ```javascript
-module.exports = {
-  googleApiKey: "Your GOOGLE_API_KEY",
-  // Firebase configuration from dev console
-  firebaseConfig: {
-    apiKey: "....",
-    authDomain: "....",
-    databaseURL: "....",
-    projectId: "....",
-    storageBucket: "....",
-    messagingSenderId: "...."
-  }
+// Firebase configuration from dev console
+firebaseConfig: {
+  apiKey: "....",
+  authDomain: "....",
+  databaseURL: "....",
+  projectId: "....",
+  storageBucket: "....",
+  messagingSenderId: "...."
 }
 ```
