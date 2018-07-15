@@ -59,6 +59,7 @@ const RegisterForm = ({
   </div>
 )
 
-export default connect(null, { registerUser })(
-  reduxForm({ form: "registerForm", validate })(RegisterForm)
-)
+export default connect(
+  null,
+  { registerUser }
+)(reduxForm({ form: "registerForm", validate })(RegisterForm))

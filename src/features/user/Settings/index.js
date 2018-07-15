@@ -51,6 +51,7 @@ const mapStateToProps = ({ firebase }) => ({
   user: firebase.profile
 })
 
-export default connect(mapStateToProps, { updatePassword, updateProfile })(
-  Settings
-)
+export default connect(
+  mapStateToProps,
+  { updatePassword, updateProfile }
+)(Settings)

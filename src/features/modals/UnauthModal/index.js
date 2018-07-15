@@ -48,4 +48,9 @@ class UnauthModal extends Component {
   }
 }
 
-export default withRouter(connect(null, { closeModal, openModal })(UnauthModal))
+export default withRouter(
+  connect(
+    null,
+    { closeModal, openModal }
+  )(UnauthModal)
+)

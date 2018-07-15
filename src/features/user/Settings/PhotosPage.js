@@ -212,6 +212,9 @@ const mapStateToProps = ({ firebase, firestore, async }) => ({
 })
 
 export default compose(
-  connect(mapStateToProps, { uploadProfileImage, deletePhoto, setMainPhoto }),
+  connect(
+    mapStateToProps,
+    { uploadProfileImage, deletePhoto, setMainPhoto }
+  ),
   firestoreConnect(auth => query(auth))
 )(PhotosPage)

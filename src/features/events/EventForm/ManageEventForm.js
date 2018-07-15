@@ -204,7 +204,10 @@ const mapStateToProps = ({ firestore: { ordered }, async: { loading } }) => {
 }
 
 export default withFirestore(
-  connect(mapStateToProps, { createEvent, updateEvent, cancelToggle })(
+  connect(
+    mapStateToProps,
+    { createEvent, updateEvent, cancelToggle }
+  )(
     reduxForm({ form: "eventForm", enableReinitialize: true, validate })(
       EventForm
     )

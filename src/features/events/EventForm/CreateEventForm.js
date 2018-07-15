@@ -141,6 +141,7 @@ class EventForm extends Component {
   }
 }
 
-export default connect(null, { createEvent })(
-  reduxForm({ form: "eventForm", validate })(EventForm)
-)
+export default connect(
+  null,
+  { createEvent }
+)(reduxForm({ form: "eventForm", validate })(EventForm))

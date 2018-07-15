@@ -16,4 +16,7 @@ const RegisterModal = ({ closeModal }) => (
   </Modal>
 )
 
-export default connect(null, { closeModal })(RegisterModal)
+export default connect(
+  null,
+  { closeModal }
+)(RegisterModal)

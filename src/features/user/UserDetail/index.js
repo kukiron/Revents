@@ -101,6 +101,9 @@ const mapStateToProps = (
 }
 
 export default compose(
-  connect(mapStateToProps, { getUserEvents, followUser, unfollowUser }),
+  connect(
+    mapStateToProps,
+    { getUserEvents, followUser, unfollowUser }
+  ),
   firestoreConnect(props => userDetailQuery(props))
 )(UserDetailedPage)

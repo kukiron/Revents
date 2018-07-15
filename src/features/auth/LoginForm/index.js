@@ -35,6 +35,7 @@ const LoginForm = ({ loginUser, socialLogin, handleSubmit, error }) => {
   )
 }
 
-export default connect(null, { loginUser, socialLogin })(
-  reduxForm({ form: "loginForm" })(LoginForm)
-)
+export default connect(
+  null,
+  { loginUser, socialLogin }
+)(reduxForm({ form: "loginForm" })(LoginForm))

@@ -72,5 +72,10 @@ const mapStateToProps = ({ firebase: { auth, profile } }) => ({
 })
 
 export default withRouter(
-  withFirebase(connect(mapStateToProps, { openModal })(NavBar))
+  withFirebase(
+    connect(
+      mapStateToProps,
+      { openModal }
+    )(NavBar)
+  )
 )

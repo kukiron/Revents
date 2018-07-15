@@ -16,4 +16,7 @@ const LoginModal = ({ closeModal }) => (
   </Modal>
 )
 
-export default connect(null, { closeModal })(LoginModal)
+export default connect(
+  null,
+  { closeModal }
+)(LoginModal)
