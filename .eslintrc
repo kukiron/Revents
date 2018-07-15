@@ -1,6 +1,6 @@
 {
   "extends": "react-app",
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "promise"],
   "rules": {
     "prettier/prettier": "error",
     "no-console": 0,
