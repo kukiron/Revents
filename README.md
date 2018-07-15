@@ -1,5 +1,7 @@
 # Revents
 
+[![Build Status](https://travis-ci.org/kukiron/Revents.svg?branch=master)](https://travis-ci.org/kukiron/Revents)
+
 Working prototype for event organizing app built with React, Redux, Semantic-UI & Firestore.
 
 ## Getting started

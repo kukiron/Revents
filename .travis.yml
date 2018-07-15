@@ -1,0 +1,23 @@
+sudo: false
+
+language: node_js
+
+notifications:
+  email: false
+
+# async-await implementation in node v7.6+
+node_js:
+  - "8"
+  - "9"
+
+cache:
+  directories:
+  - node_modules
+
+before_install:
+  - npm install -g npm@latest
+
+install:
+  - npm install
+
+script: npm run build
