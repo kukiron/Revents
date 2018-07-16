@@ -6,7 +6,7 @@ const Home = ({ history }) => (
       <div className="ui text container">
         <h1 className="ui inverted stackable header">
           <img className="ui image massive" src="/assets/logo.png" alt="logo" />
-          <div className="content">Re-vents</div>
+          <div className="content">Revents</div>
         </h1>
         <h2>Do whatever you want to do</h2>
         <div
