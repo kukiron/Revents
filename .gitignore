@@ -18,6 +18,9 @@ testArea/
 # firebase node_modules
 functions/node_modules/**
 
+# todos
+TODO.md
+
 # misc
 *.log
 *.ini
