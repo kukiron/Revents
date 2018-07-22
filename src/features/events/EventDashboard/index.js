@@ -90,6 +90,7 @@ const mapStateToProps = ({ events, async, firestore }) => ({
   activities: firestore.ordered.activity
 })
 
-export default connect(mapStateToProps, { getEventsForDashboard })(
-  firestoreConnect(query)(EventDashboard)
-)
+export default connect(
+  mapStateToProps,
+  { getEventsForDashboard }
+)(firestoreConnect(query)(EventDashboard))

@@ -111,7 +111,10 @@ const mapStateToProps = (
 
 export default compose(
   withFirestore,
-  connect(mapStateToProps, actions),
+  connect(
+    mapStateToProps,
+    actions
+  ),
   firebaseConnect(
     ({ auth, match }) =>
       auth.isLoaded && !auth.isEmpty && [`event_chat/${match.params.id}`]
