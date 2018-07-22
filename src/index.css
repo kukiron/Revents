@@ -100,3 +100,9 @@ body {
 .ui.page.modals.transition.visible {
   display: flex !important;
 }
+
+/* Fix error background label bug */
+
+.ui.basic.red.label {
+  background-color: #fff !important;
+}
