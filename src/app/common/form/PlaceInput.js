@@ -1,9 +1,10 @@
 import React, { Component } from "react"
-import { Form, Label } from "semantic-ui-react"
+import { Form } from "semantic-ui-react"
 import Script from "react-load-script"
 import PlacesAutocomplete from "react-places-autocomplete"
 
 import { googleApiKey } from "../../config/keys"
+import renderError from "../utils/renderError"
 
 const styles = {
   autocompleteContainer: {
@@ -40,12 +41,7 @@ class PlaceInput extends Component {
             styles={styles}
           />
         )}
-        {touched &&
-          error && (
-            <Label basic color="red">
-              {error}
-            </Label>
-          )}
+        {touched && renderError(error)}
       </Form.Field>
     )
   }

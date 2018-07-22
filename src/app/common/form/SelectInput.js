@@ -1,5 +1,7 @@
 import React from "react"
-import { Form, Label, Select } from "semantic-ui-react"
+import { Form, Select } from "semantic-ui-react"
+
+import renderError from "../utils/renderError"
 
 const SelectInput = ({
   input,
@@ -17,12 +19,7 @@ const SelectInput = ({
       options={options}
       multiple={multiple}
     />
-    {touched &&
-      error && (
-        <Label basic color="red">
-          {error}
-        </Label>
-      )}
+    {touched && renderError(error)}
   </Form.Field>
 )
 

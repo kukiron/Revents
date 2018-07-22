@@ -1,8 +1,10 @@
 import React from "react"
-import { Form, Label } from "semantic-ui-react"
+import { Form } from "semantic-ui-react"
 import DatePicker from "react-datepicker"
 import moment from "moment"
 import "react-datepicker/dist/react-datepicker.css"
+
+import renderError from "../utils/renderError"
 
 const DateInput = ({
   input: { value, onChange, onBlur, ...restInput },
@@ -25,12 +27,7 @@ const DateInput = ({
         onBlur={() => onBlur()}
         {...restInput}
       />
-      {touched &&
-        error && (
-          <Label basic color="red">
-            {error}
-          </Label>
-        )}
+      {touched && renderError(error)}
     </Form.Field>
   )
 }

@@ -1,5 +1,7 @@
 import React from "react"
-import { Form, Label } from "semantic-ui-react"
+import { Form } from "semantic-ui-react"
+
+import renderError from "../utils/renderError"
 
 const TextForm = ({
   input,
@@ -10,12 +12,7 @@ const TextForm = ({
 }) => (
   <Form.Field error={touched && !!error} width={width}>
     <input {...input} placeholder={placeholder} type={type} />
-    {touched &&
-      error && (
-        <Label basic color="red">
-          {error}
-        </Label>
-      )}
+    {touched && renderError(error)}
   </Form.Field>
 )
 
