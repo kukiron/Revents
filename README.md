@@ -1,6 +1,6 @@
 # Revents
 
-[![Build Status](https://travis-ci.org/kukiron/Revents.svg?branch=master)](https://travis-ci.org/kukiron/Revents)
+[![Build Status](https://travis-ci.org/kukiron/Revents.svg?branch=master)](https://travis-ci.org/kukiron/Revents) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/45fef8b5a7674a7eb4240da934f545e1)](https://www.codacy.com/app/kukiron/Revents?utm_source=github.com&utm_medium=referral&utm_content=kukiron/Revents&utm_campaign=Badge_Grade)
 
 Working prototype for event organizing app built with React, Redux, Semantic-UI & Firestore.
 
