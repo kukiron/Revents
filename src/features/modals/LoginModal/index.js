@@ -7,7 +7,7 @@ import { closeModal } from "../modalActions"
 
 const LoginModal = ({ closeModal }) => (
   <Modal size="mini" open={true} onClose={closeModal}>
-    <Modal.Header>Login to Re-vents</Modal.Header>
+    <Modal.Header>Login to Revents</Modal.Header>
     <Modal.Content>
       <Modal.Description>
         <LoginForm />
