@@ -11,7 +11,6 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js, .jsx",
     "lint:fix": "eslint --fix . --ext .js, .jsx",
-    "heroku-prebuild": "npm install --only=dev",
     "deploy": "npm run build && firebase deploy",
     "analyze": "source-map-explorer build/static/js/main.*"
   },
